@@ -7,12 +7,14 @@ import { HomeDashbord } from "@/components/home/Dashbaord"
 
 export default function Home() {
   return (
-      <main className=" bg-white dark:bg-black ">
+      <main className="">
         <Navigation />
         <div className="bg-gradient-to-br from-white via-primary/15 to-white">
           <Banner />
         </div>
-          <HomeDashbord />
+          <div className=" w-full bg-white dark:bg-black py-10 ">
+            <HomeDashbord />
+          </div>
       </main>
   )
 }
