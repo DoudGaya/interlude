@@ -87,8 +87,14 @@ export const HomeDashbord = () => {
             </div>
             {/* END OF PLAN YOUR DAY COMPONENT */}
             <div className="w-1/5">
-                <div className=" flex w-full px-3">
-
+                <div className=" flex flex-col w-full px-3">
+                  <div className=" border-b-2 mb-3 py-2 uppercase font-logo font-semibold ">
+                      Daily Healthy Tips
+                  </div>
+                  <div className=" flex space-y-4 flex-col ">
+                    <p className=' border-b py-3 dark:text-gray-400 dark:border-gray-600'>Drink alot of water, it increases your mental energy </p>
+                    <p className=' border-b py-3 dark:text-gray-400 dark:border-gray-600'>Get out sometimes, get some fresh air, It'll make you more productive</p>
+                  </div>
                 </div>
             </div>
           </div>
