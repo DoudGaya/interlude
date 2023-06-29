@@ -1,11 +1,9 @@
-
-
 import { Navigation } from "./Navigation"
 import { Banner } from "./Banner"
 import { HomeDashbord } from "@/components/home/Dashbaord"
 
 
-export default function Home() {
+export default async function Home() {
   return (
       <main className="">
         <Navigation />

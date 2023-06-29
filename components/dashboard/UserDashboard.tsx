@@ -1,14 +1,17 @@
 'use client'
 //  ICONS IMPORTS 
-import { ProductivityTips } from './ProductivityTips'
-import { Planner } from './Planner'
+import DashboardTodo from './DashboardTodo'
+import { DashboardPlanner } from './DashboardPlanner'
+import { DashboardAI } from './DashboardAI'
 import { useState } from 'react'
 import {SiOpenai} from 'react-icons/si'
 import {RxCalendar} from 'react-icons/rx'
 import {GoChecklist} from 'react-icons/go'
-import { OpenAi } from './OpenAi'
+import Link from 'next/link'
+import { auth } from '@/utils/firebase/config'
 
-export const HomeDashbord = () => {
+
+export const UserDashboard = () => {
 
   const [activeState, setActiveState] = useState('work-break')
   
@@ -16,13 +19,26 @@ export const HomeDashbord = () => {
     return setActiveState(id)
   }
 
+
+  const signOutUser = () => {
+    return auth.signOut()
+  }
+
     return (
-        <div className=" w-full bg-gray-100 border shadow-2xl shadow-black/10 dark:shadow-white/10 dark:border-gray-600  dark:bg-slate-950 rounded-xl max-w-[1200px] py-10 mx-auto">
+        <div className=" w-full h-screen bg-gray-100 shadow-black/10 dark:shadow-white/10 dark:border-gray-600  dark:bg-slate-950 rounded-xl mx-auto">
          <div className=" flex items-center flex-col">
-          <div className=" flex flex-col items-center">
-            <p className=" font-primary text-2xl">How it Works</p>
-            <h2 className=" font-logo">Sometime the best way to tell about a product is to show it </h2>
+        <div className="w-full bg-white dark:bg-black sticky z-10 top-0 shadow-sm shadow-primary/10 h-full flex">
+        <div className=" w-full max-w-[1200px] flex mx-auto justify-between py-2">
+            <div className="">
+            <Link href="/" className=" font-logo font-bold text-2xl text-primary">
+                Interlude<span className=" text-secondary">.</span>
+            </Link>
+            </div>
+            <div className="">
+              <button onClick={signOutUser} className=' bg-primary px-6 py-2 rounded-lg'>Log out</button>
+            </div>
           </div>
+        </div>
           <div className="w-full bg-white dark:bg-black dark:text-gray-200 flex items-center my-10 text-center gap-x-6 grid-cols-3">
            <div className=" w-3/2 grid grid-cols-3 mx-auto">
            <button onClick={() => updateActiveState('work-break')} className={`py-3 flex space-x-3 items-center px-6 ${activeState === 'work-break' && 'bg-black dark:bg-gray-400 dark:text-gray-900 text-white'} `}>
@@ -79,9 +95,9 @@ export const HomeDashbord = () => {
             <div className=" w-3/5 py-6 border-r-2 dark:border-gray-600 px-6 flex flex-col ">
             {
               activeState === 'work-break' ?
-            <Planner /> : activeState === 'tips' ?
-            <OpenAi /> : activeState === 'productivity'?
-            <ProductivityTips /> : <Planner />
+            <DashboardPlanner /> : activeState === 'tips' ?
+            <DashboardAI /> : activeState === 'productivity'?
+            <DashboardTodo /> : <DashboardPlanner />
             }
             </div>
             {/* END OF PLAN YOUR DAY COMPONENT */}
