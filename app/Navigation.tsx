@@ -22,7 +22,7 @@ export const Navigation = () => {
                     </Link>
                 </li>
                 <li className=" flex">
-                    <Link href={''} >
+                    <Link href={'/signup'} >
                         <span className="px-6 py-3 hover:bg-secondary text-white bg-primary rounded-lg">
                             Get Started
                         </span>

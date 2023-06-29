@@ -16,7 +16,7 @@ function Dashbaord() {
 
     return (
       <div className="">
-        <UserDashboard />
+        <UserDashboard user={user} />
       </div>
     );
 }

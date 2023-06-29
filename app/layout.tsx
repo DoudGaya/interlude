@@ -18,9 +18,11 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className+' dark:bg-gray-950 bg-gray-50'}>
-        <AuthContextProvider>
-            <Providers>{children}</Providers> 
-        </AuthContextProvider>
+            <Providers>
+                <AuthContextProvider>
+                      {children}
+                </AuthContextProvider>
+            </Providers> 
       </body>
     </html>
   )

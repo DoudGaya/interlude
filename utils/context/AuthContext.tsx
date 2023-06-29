@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import { Loading } from '@/components/loading';
+import  Loading  from '@/app/loading';
 import {
     onAuthStateChanged,
     getAuth,

@@ -2,6 +2,7 @@
 //  ICONS IMPORTS 
 import DashboardTodo from './DashboardTodo'
 import { DashboardPlanner } from './DashboardPlanner'
+import DarkButton from '../DarkMode'
 import { DashboardAI } from './DashboardAI'
 import { useState } from 'react'
 import {SiOpenai} from 'react-icons/si'
@@ -11,15 +12,13 @@ import Link from 'next/link'
 import { auth } from '@/utils/firebase/config'
 
 
-export const UserDashboard = () => {
+export const UserDashboard = ({ user }: { user: { name: string, email: string, password: string}}) => {
 
   const [activeState, setActiveState] = useState('work-break')
   
   const updateActiveState = (id: string) => {
     return setActiveState(id)
   }
-
-
   const signOutUser = () => {
     return auth.signOut()
   }
@@ -34,8 +33,9 @@ export const UserDashboard = () => {
                 Interlude<span className=" text-secondary">.</span>
             </Link>
             </div>
-            <div className="">
+            <div className=" flex space-x-4">
               <button onClick={signOutUser} className=' bg-primary px-6 py-2 rounded-lg'>Log out</button>
+              <DarkButton />
             </div>
           </div>
         </div>
