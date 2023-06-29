@@ -1,10 +1,10 @@
 'use client'
 import React from "react";
-import firebase_app from "@/utils/firebase/config";
-import { signOut } from "firebase/auth";
 import { UserDashboard } from "@/components/dashboard/UserDashboard";
 import { useAuthContext } from "@/utils/context/AuthContext";
 import { useRouter } from "next/navigation";
+
+import { TimeProvider } from "@/utils/context/TimerContext";
 function Dashbaord() {
     const { user }: any = useAuthContext()
     const router = useRouter()
@@ -16,7 +16,9 @@ function Dashbaord() {
 
     return (
       <div className="">
-        <UserDashboard user={user} />
+        <TimeProvider>
+            <UserDashboard user={user} />
+        </TimeProvider>
       </div>
     );
 }

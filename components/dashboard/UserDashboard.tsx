@@ -10,15 +10,22 @@ import {RxCalendar} from 'react-icons/rx'
 import {GoChecklist} from 'react-icons/go'
 import Link from 'next/link'
 import { auth } from '@/utils/firebase/config'
+import { TimerContext } from '@/utils/context/TimerContext'
+import { useContext } from 'react'
 
 
 export const UserDashboard = ({ user }: { user: { name: string, email: string, password: string}}) => {
+
+
+  const timer = useContext(TimerContext)
 
   const [activeState, setActiveState] = useState('work-break')
   
   const updateActiveState = (id: string) => {
     return setActiveState(id)
   }
+
+
   const signOutUser = () => {
     return auth.signOut()
   }

@@ -1,6 +1,7 @@
 'use client'
-import { Focus } from './FocusPlan'
+import { DashboardFocusPlan } from './DashboardFocusPlan'
 import {useState, useId} from'react'
+
 
 
 
@@ -9,18 +10,23 @@ export const DashboardPlanner = () => {
   const ids = useId()
     const [show, setShow] = useState(false)
     const [activePlan, setActivePlan] = useState()
-    const [plans, setPlans] = useState([
+    const [plans, setPlans] = useState([])
+
+
+    const CompanyPlans = [
       {
         id: ids,
+        name: 'My First work Plan',
         plans: [
           {
-            work: '60',
+            workTime: '60',
             breakTime: '30'
           }
         ]
       },
       {
         id: ids,
+        name: 'My First work Plan',
         plans: [
           {
             workTIme: '60',
@@ -32,8 +38,9 @@ export const DashboardPlanner = () => {
           }
         ]
       }
-    ])
+    ]
 
+    
     return (
        <>
         <div className=" flex ">
@@ -44,7 +51,7 @@ export const DashboardPlanner = () => {
             </svg>
         </button>
         </div>
-            <Focus show={show} />{/* FOCUS PLAN COMPONENT */}
+            <DashboardFocusPlan plans={plans} />{/* FOCUS PLAN COMPONENT */}
        </>
     )
 }
