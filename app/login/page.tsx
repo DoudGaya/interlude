@@ -6,9 +6,10 @@ import { useRouter } from 'next/navigation'
 import { useAuthContext } from "@/utils/context/AuthContext";
 import Link from "next/link";
 
-function Page() {
+function Login() {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
+    const [error, setError] = React.useState()
     const router = useRouter()
 
 
@@ -36,9 +37,8 @@ function Page() {
     return (
     <div className="">
     <Navigation />
-    <div className=" w-full grid grid-cols-2 h-[80vh] ">
-      <div className="">
-            Image here 
+    <div className=" w-full grid grid-cols-2 h-[90vh] ">
+      <div className=" w-full h-full bg-red-300 bg">
       </div>
       <div className=" flex flex-col items-center justify-center">
             <form onSubmit={handleForm} className=" max-w-[350px] w-full px-4 py-6 flex flex-col">
@@ -64,4 +64,4 @@ function Page() {
     );
 }
 
-export default Page;
+export default Login;

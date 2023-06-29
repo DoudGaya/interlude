@@ -39,7 +39,7 @@ export const UserDashboard = ({ user }: { user: { name: string, email: string, p
             </div>
           </div>
         </div>
-          <div className="w-full bg-white dark:bg-black dark:text-gray-200 flex items-center my-10 text-center gap-x-6 grid-cols-3">
+          <div className=" bg-white dark:bg-black dark:text-gray-200 flex items-center my-10 text-center gap-x-6 grid-cols-3">
            <div className=" w-3/2 grid grid-cols-3 mx-auto">
            <button onClick={() => updateActiveState('work-break')} className={`py-3 flex space-x-3 items-center px-6 ${activeState === 'work-break' && 'bg-black dark:bg-gray-400 dark:text-gray-900 text-white'} `}>
               <RxCalendar />
