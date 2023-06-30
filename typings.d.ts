@@ -1,9 +1,9 @@
-type Plans = {
-    id: string,
-    name: string,
-    plans: [
-      {workTime: string, breakTime: string }, 
-    ]
-}
-
-  
+interface Plans {
+  id: string;
+  name: string;
+  length: {
+      id: string;
+      workTime: string;
+      restTime: string;
+  }[];
+}[]
