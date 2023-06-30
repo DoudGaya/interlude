@@ -5,7 +5,7 @@ import {useState, useId} from'react'
 
 
 
-export const DashboardPlanner = ( {activePlans, timeconext}: {activePlans: Plans[], timeconext: Plans[]} ) => {
+export const DashboardPlanner = ( ) => {
 
   const ids = useId()
   const [plans, setPlans] = useState([])

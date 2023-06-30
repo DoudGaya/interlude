@@ -11,6 +11,7 @@ interface Plans {
     }[];
 }[]
 
+
 const TimerContext = createContext([]);
 
 const TimeProvider = ({children}:{ children: ReactNode}): ReactNode => {
@@ -77,6 +78,9 @@ const TimeProvider = ({children}:{ children: ReactNode}): ReactNode => {
             ]
         }
     ])
+    const [activePlan, setActivePlan] = useState(plans[0] || [] )
+
+    
 
 
     const createPlan = ( name: string, planId: string, timeData: Plans[] ) => {
@@ -100,10 +104,29 @@ const TimeProvider = ({children}:{ children: ReactNode}): ReactNode => {
             continue
         }
     } 
+    if (activePlan.id === id) {
+        //@ts-ignore
+        setActivePlan(plans[0])
+    }
     setPlans(newArr)
 }
 
+useEffect(() => {
+    updateActivePlan(activePlan?.id || plans[0]?.id || '')
+}, [plans])
+
+
+const updateActivePlan = (id: string) => {
+    for (let i = 0; i < plans.length; i++) {
+        if (plans[i].id === id){
+           return setActivePlan(plans[i])
+        } else {
+            continue
+        }
+    }
+}
+
      // @ts-ignore
-    return <TimerContext.Provider value={{ createPlan, plans, deletePlan }}>{children}</TimerContext.Provider>
+    return <TimerContext.Provider value={{ createPlan, plans, deletePlan, activePlan, updateActivePlan }}>{children}</TimerContext.Provider>
 } 
 export {TimeProvider, TimerContext}

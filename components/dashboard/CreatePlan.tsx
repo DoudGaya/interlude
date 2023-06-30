@@ -23,8 +23,8 @@ export const CreatePlan = ( { closeModal }) => {
     const [name, setName] = useState('')
     const [noTimeErr, setNoTimeErr] = useState(false)
     const[timeInputs, setTimeInputs] = useState({
-        works: '',
-        breaks: ''
+        workTime: '',
+        restTime: ''
     })
 
 
@@ -58,7 +58,7 @@ export const CreatePlan = ( { closeModal }) => {
            setTimeData((prev: any) => {
             return  prev = [...prev, timeInputs];
            })
-           setTimeInputs({works: '', breaks: ''})
+           setTimeInputs({workTime: '', restTime: ''})
         }
     }
 
@@ -81,8 +81,8 @@ export const CreatePlan = ( { closeModal }) => {
             <label htmlFor="planName">
                 <p>Plan Name</p>
                 <div className=" flex space-x-3 overflow-hidden">
-                    <input type="text" value={timeInputs.works} className='focus:outline-none bg-gray-200 dark:bg-gray-800 px-4 w-1/2 py-2 rounded-lg' name='works' onChange={handleTimeChange} placeholder='Work'  />
-                    <input type="text" value={timeInputs.breaks}  className='focus:outline-none bg-gray-200 dark:bg-gray-800 px-4 w-1/2 py-2 rounded-lg' name='breaks' onChange={handleTimeChange} placeholder='Break' />
+                    <input type="text" value={timeInputs.workTime} className='focus:outline-none bg-gray-200 dark:bg-gray-800 px-4 w-1/2 py-2 rounded-lg' name='workTime' onChange={handleTimeChange} placeholder='Work'  />
+                    <input type="text" value={timeInputs.restTime}  className='focus:outline-none bg-gray-200 dark:bg-gray-800 px-4 w-1/2 py-2 rounded-lg' name='restTime' onChange={handleTimeChange} placeholder='Break' />
                     <button onClick={addingTimes} className=' bg-primary text-white p-2 rounded-lg'>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -96,13 +96,13 @@ export const CreatePlan = ( { closeModal }) => {
                 timeData.length ? timeData.map((itm: any) => {
                    return (
                         <>
-                        <div className=" flex justify-between px-2 border-b rounded-b-lg py-1 border-gray-500 dark:border-gray-600 ">
+                        <div key={itm.id} className=" flex justify-between px-2 border-b rounded-b-lg py-1 border-gray-500 dark:border-gray-600 ">
                         <small className=' text-xs flex '>
-                            <span>{itm.works} mins - work</span> 
+                            <span>{itm.workTime} mins - work</span> 
                             <RiTimerFlashLine />
                         </small>
                         <small className=' text-xs flex '>
-                            <span>{itm.breaks} mins - break</span>
+                            <span>{itm.restTime} mins - break</span>
                             <RiRestTimeLine /> 
                         </small>
                         </div>

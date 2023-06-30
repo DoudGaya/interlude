@@ -1,43 +1,47 @@
 'use client'
 //  ICONS IMPORTS 
 import DashboardTodo from './DashboardTodo'
-import { DashboardPlanner } from './DashboardPlanner'
-import DarkButton from '../DarkMode'
-import { DashboardAI } from './DashboardAI'
-import { useState } from 'react'
-import {SiOpenai} from 'react-icons/si'
-import {RxCalendar} from 'react-icons/rx'
-import {GoChecklist} from 'react-icons/go'
-import Link from 'next/link'
-import { auth } from '@/utils/firebase/config'
-import { TimerContext } from '@/utils/context/TimerContext'
-import { useContext } from 'react'
-import { CreatePlan } from './CreatePlan'
-import ClickAwayListener from 'react-click-away-listener'
+import { DashboardPlanner } from './DashboardPlanner';
+import DarkButton from '../DarkMode';
+import { DashboardAI } from './DashboardAI';
+import { useState, useEffect, useContext } from 'react';
+import {SiOpenai} from 'react-icons/si';
+import {RxCalendar} from 'react-icons/rx';
+import {GoChecklist} from 'react-icons/go';
+import Link from 'next/link';
+import { auth } from '@/utils/firebase/config';
+import { TimerContext } from '@/utils/context/TimerContext';
+import { CreatePlan } from './CreatePlan';
+import ClickAwayListener from 'react-click-away-listener';
 
 
 
 
 export const UserDashboard = ({ user }: { user: { name: string, email: string, password: string}}) => {
-  const timecontext = useContext(TimerContext)
+
 
        // @ts-ignore
-  const { plans } = useContext(TimerContext)
-       // @ts-ignore
-  const { deletePlan }= useContext(TimerContext)     
+  const { plans, activePlan, updateActivePlan, deletePlan } = useContext(TimerContext)   
   const [activeState, setActiveState] = useState<any>('work-break')
   const [creatPlanModal, setCreatePlanModal] = useState(false)
-  const [activePlan, setActivePlan] = useState <Plans[]> (timecontext[0])
+
   
   const updateActiveState = (id: string) => {
     return setActiveState(id)
   }
 
 
+  useEffect(() => {
+    updateActivePlan(activePlan?.id || plans[0]?.id || '')
+}, [plans])
+
+  
+
   const signOutUser = () => {
     return auth.signOut()
   }
 
+  
     return (
         <div className=" w-full h-screen bg-gray-100 shadow-black/10 dark:shadow-white/10 dark:border-gray-600  dark:bg-slate-950 rounded-xl mx-auto">
 
@@ -87,7 +91,7 @@ export const UserDashboard = ({ user }: { user: { name: string, email: string, p
               {
                 plans.map((single: Plans) => {
                   return (
-                    <button key={single.id} className="flex items-center text-gray-500 border border-gray-500 rounded bg-2ray-100 w-full px-4 space-x-4 py-2 ">
+                    <button onClick={() => updateActivePlan(single.id)} key={single.id} className={`flex items-center text-gray-500 border ${activePlan.id === single.id ? 'border-primary' : 'border-gray-500'} rounded bg-2ray-100 w-full px-4 space-x-4 py-2`}>
                         <p className=" font-primary text-sm flex justify-between items-center truncate w-full">{single.name}</p>
                        <button onClick={() => deletePlan(single.id)}>
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 flex-none h-4">
@@ -112,9 +116,9 @@ export const UserDashboard = ({ user }: { user: { name: string, email: string, p
             }
             {
               activeState === 'work-break' ?
-            <DashboardPlanner activePlans={activePlan} timeconext={timecontext} /> : activeState === 'tips' ?
+            <DashboardPlanner /> : activeState === 'tips' ?
             <DashboardAI /> : activeState === 'productivity'?
-            <DashboardTodo /> : <DashboardPlanner activePlans={activePlan} timeconext={timecontext}  />
+            <DashboardTodo /> : <DashboardPlanner />
             }
             </div>
             {/* END OF PLAN YOUR DAY COMPONENT */}
