@@ -13,6 +13,7 @@ import { auth } from '@/utils/firebase/config'
 import { TimerContext } from '@/utils/context/TimerContext'
 import { useContext } from 'react'
 import { CreatePlan } from './CreatePlan'
+import ClickAwayListener from 'react-click-away-listener'
 
 
 
@@ -24,16 +25,13 @@ export const UserDashboard = ({ user }: { user: { name: string, email: string, p
   const { plans } = useContext(TimerContext)
        // @ts-ignore
   const { deletePlan }= useContext(TimerContext)     
-
   const [activeState, setActiveState] = useState<any>('work-break')
+  const [creatPlanModal, setCreatePlanModal] = useState(false)
   const [activePlan, setActivePlan] = useState <Plans[]> (timecontext[0])
   
   const updateActiveState = (id: string) => {
     return setActiveState(id)
   }
-
-
-  console.log(timecontext)
 
 
   const signOutUser = () => {
@@ -77,7 +75,7 @@ export const UserDashboard = ({ user }: { user: { name: string, email: string, p
           </div>
           <div className=" w-full flex  h-[400px]">
             <div className=" w-1/5 space-y-3 flex flex-col items-center border-r-2 dark:border-gray-600 px-6  text-center ">
-              <button className="flex items-center justify-center text-gray-500 border border-dashed border-gray-500 rounded bg-2ray-100 w-full px-4 space-x-4 py-3 ">
+              <button onClick={() => setCreatePlanModal(true)} className="flex items-center justify-center text-gray-500 border border-dashed border-gray-500 rounded bg-2ray-100 w-full px-4 space-x-4 py-3 ">
                 <p className=" font-primary">Create Plan</p>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
@@ -104,11 +102,14 @@ export const UserDashboard = ({ user }: { user: { name: string, email: string, p
             </div>
             {/*PLAN YOUR DAY COMPONENT */}
             <div className=" w-3/5  py-6 border-r-2 dark:border-gray-600 px-6 flex flex-col ">
-            <div className=" relative">
-            <div className=" absolute w-full -top-20 flex ">
-              <CreatePlan />
-            </div>
-            </div>
+            { creatPlanModal &&
+
+              <div className=" relative">
+                <div className=" absolute w-full -top-20 flex ">
+                    <CreatePlan closeModal={setCreatePlanModal} />
+                </div>
+              </div>
+            }
             {
               activeState === 'work-break' ?
             <DashboardPlanner activePlans={activePlan} timeconext={timecontext} /> : activeState === 'tips' ?

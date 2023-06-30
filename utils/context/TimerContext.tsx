@@ -79,12 +79,12 @@ const TimeProvider = ({children}:{ children: ReactNode}): ReactNode => {
     ])
 
 
-    const createPlan = ( name: string, timeSpan: Plans[] ) => {
+    const createPlan = ( name: string, planId: string, timeData: Plans[] ) => {
         setPlans((prev: any) => {
             let newPlan = {
-                id: ids,
+                id: planId,
                 name: name,
-                timeSpan: timeSpan
+                timeSpan: timeData
             }
            return prev = [...prev, newPlan]
         })

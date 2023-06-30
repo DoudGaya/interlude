@@ -1,6 +1,7 @@
-import {useContext, useState} from 'react'
+import {useContext, useState, useId} from 'react'
 import {RiTimerFlashLine} from 'react-icons/ri'
 import {RiRestTimeLine} from 'react-icons/ri'
+import { TimerContext } from '@/utils/context/TimerContext'
 
 
 interface TimeData {
@@ -8,7 +9,15 @@ interface TimeData {
     breaks: string;
 }
 
-export const CreatePlan = () => {
+// @ts-ignore
+export const CreatePlan = ( { closeModal }) => {
+
+
+    const id = useId()
+
+
+    // @ts-ignore
+    const {createPlan } = useContext(TimerContext)
 
     const [timeData, setTimeData] = useState([])
     const [name, setName] = useState('')
@@ -19,8 +28,10 @@ export const CreatePlan = () => {
     })
 
 
-    const handleFormSubmit = () => {
-        console.log('data')
+    const handleFormSubmit = (event: any) => {
+        event.preventDefault()
+        createPlan(name, id, timeData)
+        closeModal(false)
     }
 
     const handleTimeChange = (event: any) => {
@@ -54,7 +65,12 @@ export const CreatePlan = () => {
 
 
   return (
-    <div className=' w-2/6  mx-auto py-10 bg-white dark:bg-black px-6 border border-gray-300 dark:border-gray-600 rounded-lg'>
+    <div className=' w-2/6 relative mx-auto py-10 bg-white dark:bg-black px-6 border border-gray-300 dark:border-gray-600 rounded-lg'>
+        <button onClick={() => closeModal(false)} className=' top-3 absolute right-3'>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
         <form className=' flex flex-col space-y-6' onSubmit={handleFormSubmit}>
             <p className=' font-logo text-2xl border-b border-primary'>Create a Plan</p>
             <label htmlFor="planName" className=' space-y-1'>
