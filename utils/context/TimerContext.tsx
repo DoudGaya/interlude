@@ -1,6 +1,6 @@
 
-import restmp3 from '../../public/sounds/rest.mp3'
-import workmp3 from '../../public/sounds/work.mp3'
+// import restmp3 from '../../public/sounds/rest.mp3'
+// import workmp3 from '../../public/sounds/work.mp3'
 
 
 import { useEffect, useId, useRef, useState, createContext, ReactNode } from "react";
@@ -16,8 +16,8 @@ interface Plans {
 
 const TimerContext = createContext([]);
 const TimeProvider = ({children}:{ children: ReactNode}): ReactNode => {
-    const workAudioRefs = useRef(new Audio(workmp3))
-    const restAudioRefs = useRef(new Audio(restmp3))
+    // const workAudioRefs = useRef(new Audio(workmp3))
+    // const restAudioRefs = useRef(new Audio(restmp3))
     const [plans, setPlans] = useState<Plans[]>([
         {
             id: '1',
@@ -154,12 +154,12 @@ const TimeProvider = ({children}:{ children: ReactNode}): ReactNode => {
 
       const handleTimerEnd = () => {
         if (isBreak) {
-          playAudio(restAudioRefs);
+          // playAudio(restAudioRefs);
           setIsBreak(false);
           startNextTimer();
           setIsRunning(true);
         } else {
-          playAudio(workAudioRefs);
+          // playAudio(workAudioRefs);
           if (currentTimerIndex + 1 < activeTimeSpan.length) {
             setWorkTimeLeft(Number(activeTimeSpan[currentTimerIndex + 1].workTime));
             setIsRunning(true);
@@ -236,7 +236,7 @@ const TimeProvider = ({children}:{ children: ReactNode}): ReactNode => {
 //     setPlans(newArr)
 // }
 
-const deletePlan = (id) => {
+const deletePlan = (id: string) => {
   const updatedPlans = plans.filter((plan) => plan.id !== id);
 
   if (activePlan.id === id) {
@@ -247,6 +247,7 @@ const deletePlan = (id) => {
       setWorkTimeLeft(Number(updatedPlans[0].timeSpan[0].workTime));
       setRestTimeLeft(Number(updatedPlans[0].timeSpan[0].restTime));
     } else {
+      //@ts-ignore
       setActivePlan(null);
       setActiveTimeSpan([]);
       setCurrentTimerIndex(0);
