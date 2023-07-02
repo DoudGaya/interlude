@@ -93,10 +93,10 @@ export default async function Home() {
 
              <div className=" ">
                   <p className=" dark:text-gray-300 max-w-[600px] text-justify mx-auto">
-                    The Dashbord may contain a little bug with the timer, but most the features implented there works as expected.
+                    The Dashboard may contain a little bug with the timer, but most the features implemented there works as expected.
                     I also wanted to integrate the <span className=" font-bold cursor-pointer hover:underline">OpenAI's</span> GPT-3 landuage model
                     but my time is limited because I'm alone in my team and could not find others to join me and wanted to practice
-                    healthy and productive work habib without getting burned out like <span className="text-primary font-bold hover:underline cursor-pointer">Interlude</span> recommended
+                    healthy and productive work habits without getting burned out like <span className="text-primary font-bold hover:underline cursor-pointer">Interlude</span> recommended
                     and it was a fun experience. I also wanted to redesign all other pages on the original <Link href={'https://interlude.digital'} className="text-primary font-bold hover:underline cursor-pointer">Interlude.com</Link> website
                     but again, the time is limited. I'll try to debug the application and the updated version will always be found here.
                   </p>
