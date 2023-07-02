@@ -89,7 +89,7 @@ export default async function Home() {
             <div className="max-w-[1200px] px-10 space-y-6 flex items-center justify-center py-[100px] flex-col  mx-auto">
               <small className="text-md">Designed and Developed by</small>
              <p className=" text-3xl text-center lg:text-7xl font-logo">Abdulrahman Dauda Gaya</p>
-             <p>Thank You. <span  className=" font-bold">Interlude</span> and <span  className=" font-bold">CodeMonk</span></p>
+             <p>Thank You. <Link href={'https://interlude.digital'}> <span  className=" font-bold">Interlude</span></Link> and <Link href={'https://codemonk.ai'}><span  className=" font-bold">CodeMonk</span></Link> </p>
 
              <div className=" ">
                   <p className=" dark:text-gray-300 max-w-[600px] text-justify mx-auto">
