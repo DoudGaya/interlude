@@ -43,8 +43,14 @@ export const UserDashboard = ({ user }: { user: { name: string, email: string, p
 
   
     return (
-        <div className=" w-full h-screen bg-gray-100 shadow-black/10 dark:shadow-white/10 dark:border-gray-600  dark:bg-slate-950 rounded-xl mx-auto">
-
+        <>
+         <div className="h-full flex lg:hidden min-h-[80vh] px-10 w-full items-center justify-center">
+         <div className=" flex flex-col space-y-10">
+         <p className=' text-2xl font-logo text-center'> Please visit on a desktop screen to access this section. </p>
+          <Link href={'/'} className=" text-white text-center text-xl bg-primary px-10 py-3">Go Home</Link>
+         </div>
+        </div>
+          <div className=" w-full hidden lg:block h-screen bg-gray-100 shadow-black/10 dark:shadow-white/10 dark:border-gray-600  dark:bg-slate-950 rounded-xl mx-auto">
          <div className=" flex items-center flex-col">
         <div className="w-full bg-white dark:bg-black sticky z-10 top-0 shadow-sm shadow-primary/10 h-full flex">
         <div className=" w-full max-w-[1200px] flex mx-auto justify-between py-2">
@@ -136,5 +142,6 @@ export const UserDashboard = ({ user }: { user: { name: string, email: string, p
           </div>
          </div>
         </div>
+        </>
     )
 }

@@ -2,7 +2,7 @@ export const DashboardAI = () => {
   return (
       <div className=" flex flex-col w-full min-h-full justify-between">
           <div className=" flex items-center justify-center my-auto">
-              <p className=" text-lg">Log In to Use this Features</p>
+              <p className=" text-lg">Coming Soon...</p>
           </div>
           <div className="border border-gray-600 flex w-full items-center ">
              <input type="text" className=" w-full py-3 outline-none px-4 bg-transparent" />

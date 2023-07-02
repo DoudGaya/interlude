@@ -2,11 +2,15 @@
 import React from "react";
 import signUp from "@/utils/firebase/signup";
 import { Navigation } from "../Navigation";
+import interludeLogo from '@/public/interlude_logo.svg'
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
 import { useId } from "react";
 import Link from "next/link";
 import addData from "@/utils/firebase/firestore/addData";
 import { useAuthContext } from "@/utils/context/AuthContext";
+import { MobileFooter } from "@/components/MobileFooter";
+import { MobileHeader } from "@/components/MobileHeader";
 
 function SignUp() {
     const [email, setEmail] = React.useState('')
@@ -61,11 +65,21 @@ function SignUp() {
 
     return (
     <div className="">
+        <div className="fixed flex lg:hidden dark:bg-black bg-white w-full bottom-0 left-auto">
+          <MobileFooter />
+        </div>
+        <div className="fixed flex lg:hidden border-b border-b-primary/60 shadow-lg dark:bg-black bg-white w-full top-0 left-auto">
+          <MobileHeader />
+        </div>
     <Navigation />
-    <div className=" w-full grid grid-cols-2 h-[80vh] ">
-      <div className="">
-            Image here 
-      </div>
+    <div className=" w-full grid lg:grid-cols-2 grid-cols-1 my-auto py-20">
+        <div className="w-full h-full flex justify-center items-center">
+            <div className=" flex flex-col items-center space-y-6 ">
+            <Image alt="Interlude" className=" h-[100px] w-[100px]" src={interludeLogo} />
+            <p className=" text-6xl text-primary font-logo font-bold ">Interlude<span className=" text-secondary">.</span></p>
+            <p className=" text-2xl text-center font-logo">breaks power productivity. Interlude powers breaks.</p>
+        </div>
+        </div>
       <div className=" flex flex-col items-center w-full justify-center">
             <form onSubmit={handleForm} className=" space-y-3 max-w-[350px] w-full px-4 py-6 flex flex-col">
                 <div className=" py-4 border-b mb-6 border-primary text-2xl font-logo">

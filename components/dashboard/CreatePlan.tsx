@@ -75,14 +75,14 @@ export const CreatePlan = ( { closeModal }) => {
             <p className=' font-logo text-2xl border-b border-primary'>Create a Plan</p>
             <label htmlFor="planName" className=' space-y-1'>
                 <p className=''>Plan Name</p>
-                <input type="text" onChange={planNameInput} placeholder='My Plan' className=' focus:outline-none bg-gray-200 dark:bg-gray-800 px-4 w-full py-2 rounded-lg' />
+                <input type="text" required onChange={planNameInput} placeholder='My Plan' className=' focus:outline-none bg-gray-200 dark:bg-gray-800 px-4 w-full py-2 rounded-lg' />
             </label>
 
             <label htmlFor="planName">
                 <p>Plan Name</p>
                 <div className=" flex space-x-3 overflow-hidden">
-                    <input type="text" value={timeInputs.workTime} className='focus:outline-none bg-gray-200 dark:bg-gray-800 px-4 w-1/2 py-2 rounded-lg' name='workTime' onChange={handleTimeChange} placeholder='Work'  />
-                    <input type="text" value={timeInputs.restTime}  className='focus:outline-none bg-gray-200 dark:bg-gray-800 px-4 w-1/2 py-2 rounded-lg' name='restTime' onChange={handleTimeChange} placeholder='Break' />
+                    <input type="number" value={timeInputs.workTime} className='focus:outline-none bg-gray-200 dark:bg-gray-800 px-4 w-1/2 py-2 rounded-lg' name='workTime' onChange={handleTimeChange} placeholder='Work'  />
+                    <input type="number" value={timeInputs.restTime}  className='focus:outline-none bg-gray-200 dark:bg-gray-800 px-4 w-1/2 py-2 rounded-lg' name='restTime' onChange={handleTimeChange} placeholder='Break' />
                     <button onClick={addingTimes} className=' bg-primary text-white p-2 rounded-lg'>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />

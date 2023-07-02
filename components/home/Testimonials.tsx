@@ -46,7 +46,7 @@ export const Testimonials = () => {
   return (
     <>
     <p className=' font-semibold text-xl font-logo'>What others are saying about us</p>
-    <div className=' grid grid-cols-2  gap-x-6 gap-y-4'>
+    <div className=' grid grid-cols-1 lg:grid-cols-2  gap-x-6 gap-y-4'>
        {testimonials.map((single: TestMo ) => {
             return (
                 <div key={single.id} className="border space-y-6 px-6 py-4 rounded-xl broder-gray-600 dark:border-gray-600 flex flex-col">

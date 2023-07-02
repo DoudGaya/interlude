@@ -15,7 +15,7 @@ export const FocusPlan = ( {show}: {show: boolean}) => {
                 <Timer />
             </div>
       </div>
-
+      
        {
         show &&
         <div className="w-full flex text-gray-800 items-center justify-center my-10 dark:text-gray-400 ">

@@ -6,6 +6,8 @@ import { useState } from 'react'
 import {SiOpenai} from 'react-icons/si'
 import {RxCalendar} from 'react-icons/rx'
 import {GoChecklist} from 'react-icons/go'
+import { MobileFooter } from '../MobileFooter'
+import { MobileHeader } from '../MobileHeader'
 import { OpenAi } from './OpenAi'
 
 export const HomeDashbord = () => {
@@ -17,7 +19,11 @@ export const HomeDashbord = () => {
   }
 
     return (
-        <div className=" w-full bg-gray-100 border shadow-2xl shadow-black/10 dark:shadow-white/10 dark:border-gray-600  dark:bg-slate-950 rounded-xl max-w-[1200px] py-10 mx-auto">
+        <>
+        <div className=" flex lg:hidden py-10 border-y bg-gray-400 dark:bg-slate-800 px-10 text-center ">
+          <p className=' text-xl'> This app is specifically designed for desktop users. Visit on Deskstop screen to access this secion</p>
+        </div>
+        <div className=" w-full lg:flex hidden bg-gray-100 border shadow-2xl shadow-black/10 dark:shadow-white/10 dark:border-gray-600  dark:bg-slate-950 rounded-xl max-w-[1200px] py-10 mx-auto">
          <div className=" flex items-center flex-col">
           <div className=" flex flex-col items-center">
             <p className=" font-primary text-2xl">How it Works</p>
@@ -99,5 +105,6 @@ export const HomeDashbord = () => {
           </div>
          </div>
         </div>
+        </>
     )
 }
