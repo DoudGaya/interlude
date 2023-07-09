@@ -15,7 +15,8 @@ module.exports = {
       },
       fontFamily: {
         primary: ['Roboto', 'sans-serif'],
-        logo: [ 'Poppins', 'sans-serif']
+        logo: [ 'Poppins', 'sans-serif'],
+        clock: [ 'Rajdhani', 'sans-serif']
       },
       colors: {
         primary: 'rgb(86,0,227)',

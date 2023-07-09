@@ -5,9 +5,11 @@ import { TimerContext } from '@/utils/context/TimerContext'
 
 
 interface TimeData {
-    work: string;
-    breaks: string;
+    id: number
+    workTime: string;
+    restTime: string;
 }
+
 
 // @ts-ignore
 export const CreatePlan = ( { closeModal }) => {
@@ -17,7 +19,7 @@ export const CreatePlan = ( { closeModal }) => {
 
 
     // @ts-ignore
-    const {createPlan } = useContext(TimerContext)
+    const {createPlan, plans } = useContext(TimerContext)
 
     const [timeData, setTimeData] = useState([])
     const [name, setName] = useState('')
@@ -53,19 +55,24 @@ export const CreatePlan = ( { closeModal }) => {
         event.preventDefault()
         if(!timeInputs){
            setNoTimeErr(true)
+           return;
         } else {
-            // @ts-ignore
-           setTimeData((prev: any) => {
-            return  prev = [...prev, timeInputs];
+            //@ts-ignore
+           setTimeData((prev: TimeData []) => {
+            let newTimeInputs = {...timeInputs, id: new Date}
+            return  [...prev, newTimeInputs];
            })
-           setTimeInputs({workTime: '', restTime: ''})
+           setTimeInputs({
+            workTime: '', 
+            restTime: ''
+        })
         }
     }
 
 
 
   return (
-    <div className=' w-2/6 relative mx-auto py-10 bg-white dark:bg-black px-6 border border-gray-300 dark:border-gray-600 rounded-lg'>
+    <div className=' w-2/6 relative mx-auto z-10 py-10 bg-white dark:bg-black px-6 border border-gray-300 dark:border-gray-600 rounded-lg'>
         <button onClick={() => closeModal(false)} className=' top-3 absolute right-3'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -75,7 +82,7 @@ export const CreatePlan = ( { closeModal }) => {
             <p className=' font-logo text-2xl border-b border-primary'>Create a Plan</p>
             <label htmlFor="planName" className=' space-y-1'>
                 <p className=''>Plan Name</p>
-                <input type="text" required onChange={planNameInput} placeholder='My Plan' className=' focus:outline-none bg-gray-200 dark:bg-gray-800 px-4 w-full py-2 rounded-lg' />
+                <input type="text" onChange={planNameInput} placeholder='My Plan' className=' focus:outline-none bg-gray-200 dark:bg-gray-800 px-4 w-full py-2 rounded-lg' />
             </label>
 
             <label htmlFor="planName">

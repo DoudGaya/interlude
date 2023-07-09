@@ -11,20 +11,18 @@ export const Navigation = () => {
             </Link>
 
             <ul className=" flex py-3 space-x-6">
-                <li className=" flex">
-                    <Link href={''} className=" hover:text-primary">
-                        How it works 
-                    </Link>
-                </li>
-                <li className=" flex">
-                    <Link href={''} className=" hover:text-primary">
-                        About US
-                    </Link>
-                </li>
+              
                 <li className=" flex">
                     <Link href={'/signup'} >
                         <span className="px-6 py-3 hover:bg-secondary text-white bg-primary rounded-lg">
                             Get Started
+                        </span>
+                    </Link>
+                </li>
+                <li className=" flex">
+                    <Link href={'/login'} >
+                        <span className="px-6 py-3 hover:bg-primary/30 border-2 text-primary border-primary rounded-lg">
+                            Log In
                         </span>
                     </Link>
                 </li>

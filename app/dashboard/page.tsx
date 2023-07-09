@@ -3,6 +3,7 @@ import React from "react";
 import { UserDashboard } from "@/components/dashboard/UserDashboard";
 import { useAuthContext } from "@/utils/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { TodoProvider } from "@/utils/context/TodoContext";
 
 import { TimeProvider } from "@/utils/context/TimerContext";
 function Dashbaord() {
@@ -16,9 +17,11 @@ function Dashbaord() {
 
     return (
       <div className="">
-        <TimeProvider>
+        <TodoProvider>
+          <TimeProvider>
             <UserDashboard user={user} />
         </TimeProvider>
+        </TodoProvider>
       </div>
     );
 }

@@ -7,3 +7,18 @@ interface Plans {
       restTime: string;
   }[];
 }[]
+
+
+interface TodoContextValue {
+  todos: Todo[];
+  createTodo: (text: string) => void;
+  deleteTodo: (id: number) => void;
+  updateTodo: (id: number, updatedTodo: Todo) => void;
+}
+
+interface Todo {
+  id: number;
+  text: string;
+  completed: boolean;
+  time: Date;
+}

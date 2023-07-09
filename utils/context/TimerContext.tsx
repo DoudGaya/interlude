@@ -1,279 +1,270 @@
+import useSound from 'use-sound';
+import { useEffect, useRef, useState, createContext, ReactNode } from "react";
 
-// import restmp3 from '../../public/sounds/rest.mp3'
-// import workmp3 from '../../public/sounds/work.mp3'
+interface TimeSpan {
+  id: number;
+  workTime: string;
+  restTime: string;
+}
 
+interface Plan {
+  id: string;
+  name: string;
+  timeSpan: TimeSpan[];
+}
 
-import { useEffect, useId, useRef, useState, createContext, ReactNode } from "react";
-interface Plans {
-    id: string;
-    name: string;
-    timeSpan: {
-        id: string;
-        workTime: string;
-        restTime: string;
-    }[];
-}[]
+interface TimerContextType {
+  createPlan: (name: string, planId: string, timeData: TimeSpan[]) => void;
+  deletePlan: (id: string) => void;
+  updateActivePlan: (id: string) => void;
+  currentTimerIndex: number;
+  isRunning: boolean;
+  restTimeLeft: number;
+  workTimeLeft: number;
+  handleButtonClick: () => void;
+  plans: Plan[];
+  activePlan: Plan | null;
+}
 
-const TimerContext = createContext([]);
-const TimeProvider = ({children}:{ children: ReactNode}): ReactNode => {
-    // const workAudioRefs = useRef(new Audio(workmp3))
-    // const restAudioRefs = useRef(new Audio(restmp3))
-    const [plans, setPlans] = useState<Plans[]>([
+const TimerContext = createContext<TimerContextType>({
+  createPlan: () => {},
+  deletePlan: () => {},
+  updateActivePlan: () => {},
+  currentTimerIndex: 0,
+  isRunning: false,
+  restTimeLeft: 0,
+  workTimeLeft: 0,
+  handleButtonClick: () => {},
+  plans: [],
+  activePlan: null,
+});
+
+const TimeProvider = ({ children }: { children: ReactNode }): JSX.Element => {
+  //@ts-ignore
+  const [playRest, { stopRest }] = useSound('../../public/sounds/rest.mp3');
+  //@ts-ignore
+  const [playWork, { stopWork }] = useSound('../../public/sounds/work.mp3');
+  const [plans, setPlans] = useState<Plan[]>([
+    {
+      id: '1',
+      name: 'My Monday Plan',
+      timeSpan: [
         {
-            id: '1',
-            name: 'My monday Plan',
-            timeSpan: [
-               {
-                id:'1',
-                workTime: '20',
-                restTime: '10'
-               },
-               {
-                id: '2',
-                workTime: '15',
-                restTime: '10'
-               },
-               {
-                id: '3',
-                workTime: '30',
-                restTime: '20'
-               }
-            ]
+          id: 1,
+          workTime: '20',
+          restTime: '10',
         },
-
         {
-            id: '2',
-            name: 'My productive work plan',
-            timeSpan: [
-               {
-                id: '1',
-                workTime: '60',
-                restTime: '30'
-               },
-               {
-                id: '2',
-                workTime: '60',
-                restTime: '30'
-               },
-               {
-                id: '3',
-                workTime: '60',
-                restTime: '30'
-               }
-            ]
+          id: 2,
+          workTime: '15',
+          restTime: '40',
         },
-
         {
-            id: '3',
-            name: 'My friday plan',
-            timeSpan: [
-               {
-                id: '1',
-                workTime: '60',
-                restTime: '30'
-               },
-               {
-                id: '2',
-                workTime: '60',
-                restTime: '30'
-               },
-            ]
-        }
-    ])
-    const [activePlanId, setActivePlanId] = useState(0)
-    const [activePlan, setActivePlan] = useState(plans[activePlanId] || plans[0]) 
-    const {timeSpan} = activePlan    
-    const [activeTimeSpan, setActiveTimeSpan] = useState(timeSpan)
-    const [currentTimerIndex, setCurrentTimerIndex] = useState(0);
-    //@ts-ignore
-    const [workTimeLeft, setWorkTimeLeft] = useState(Number(activeTimeSpan[currentTimerIndex].workTime));
-    // @ts-ignore
-    const [restTimeLeft, setRestTimeLeft] = useState(Number(activeTimeSpan[currentTimerIndex].restTime));
-    const [isBreak, setIsBreak] = useState(false);
-    const [isRunning, setIsRunning] = useState(false);
+          id: 3,
+          workTime: '50',
+          restTime: '20',
+        },
+      ],
+    },
+    {
+      id: '2',
+      name: 'M Productive plan',
+      timeSpan: [
+        {
+          id: 1,
+          workTime: '20',
+          restTime: '10',
+        },
+        {
+          id: 2,
+          workTime: '15',
+          restTime: '10',
+        },
+        {
+          id: 3,
+          workTime: '30',
+          restTime: '20',
+        },
+      ],
+    },
+    {
+      id: '3',
+      name: 'Flexible plan',
+      timeSpan: [
+        {
+          id: 1,
+          workTime: '20',
+          restTime: '10',
+        },
+        {
+          id: 2,
+          workTime: '15',
+          restTime: '10',
+        },
+        {
+          id: 3,
+          workTime: '30',
+          restTime: '20',
+        },
+      ],
+    },
+    // Other plans...
+  ]);
 
-    useEffect(() => {
+  const [activePlanId, setActivePlanId] = useState<string>('1');
+  const activePlan = plans.find((plan) => plan.id === activePlanId) || null;
+  const { timeSpan = [] } = activePlan || {};
 
-        if (!isBreak){
+  const [activeTimeSpan, setActiveTimeSpan] = useState<TimeSpan[]>(timeSpan);
+  const [currentTimerIndex, setCurrentTimerIndex] = useState<number>(0);
+  const [workTimeLeft, setWorkTimeLeft] = useState<number>(Number(activeTimeSpan[currentTimerIndex]?.workTime) || 0);
+  const [restTimeLeft, setRestTimeLeft] = useState<number>(Number(activeTimeSpan[currentTimerIndex]?.restTime) || 0);
+  const [isBreak, setIsBreak] = useState<boolean>(false);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
 
-            //@ts-ignore
-            let wTimer;
-            if (isRunning) {
-            wTimer = setInterval(() => {
-                setWorkTimeLeft(prevTimeLeft => prevTimeLeft - 1);
-            }, 1000);
-            }
-            
-            if (workTimeLeft === 0) {
-                clearInterval(wTimer);
-                setWorkTimeLeft(0)
-                handleTimerEnd();
-            }
-
-            return () => {
-                // @ts-ignore
-              clearInterval(wTimer);
-            };
+  const handleTimerEnd = () => {
+    if (isBreak) {
+      setIsBreak(false);
+      startNextTimer();
+      setIsRunning(true);
+    } else {
+      if (currentTimerIndex + 1 < activeTimeSpan.length) {
+        setWorkTimeLeft(Number(activeTimeSpan[currentTimerIndex + 1]?.workTime) || 0);
+        setIsRunning(true);
       } else {
+        console.log('Well done');
+        setIsRunning(false);
+      }
+      setRestTimeLeft(Number(activeTimeSpan[currentTimerIndex]?.restTime) || 0);
+      setIsBreak(true);
+    }
+  };
 
-         // @ts-ignore
-         let rTimer;
-         if (isRunning) {
-           rTimer = setInterval(() => {
-             setRestTimeLeft(prevTimeLeft => prevTimeLeft - 1);
-           }, 1000);
-         }
-     
-         if (restTimeLeft === 0) {
-           clearInterval(rTimer);
-           setRestTimeLeft(0)
-           handleTimerEnd();
-         }
-     
-         return () => {
-             // @ts-ignore
-           clearInterval(rTimer);
-         };
+  const startNextTimer = () => {
+    const nextTimerIndex = currentTimerIndex + 1;
+    if (nextTimerIndex < activeTimeSpan.length) {
+      setCurrentTimerIndex(nextTimerIndex);
+      setWorkTimeLeft(Number(activeTimeSpan[nextTimerIndex]?.workTime) || 0);
+      setRestTimeLeft(Number(activeTimeSpan[nextTimerIndex]?.restTime) || 0);
+      setIsRunning(true);
+    } else {
+      console.log('Well done');
+    }
+  };
 
+  const startRestTimer = () => {
+    const restTime = Number(activeTimeSpan[currentTimerIndex]?.restTime) || 0;
+    setRestTimeLeft(restTime);
+  };
+
+  const handleButtonClick = () => {
+    if (isRunning) {
+      setIsRunning(false);
+    } else {
+      setIsRunning(true);
+    }
+  };
+
+  const createPlan = (name: string, planId: string, timeData: TimeSpan[]) => {
+    setPlans((prevPlans) => {
+      const newPlan: Plan = {
+        id: planId,
+        name: name,
+        timeSpan: timeData,
+      };
+      return [...prevPlans, newPlan];
+    });
+  };
+
+  const deletePlan = (id: string) => {
+    const updatedPlans = plans.filter((plan) => plan.id !== id);
+
+    if (activePlan?.id === id) {
+      if (updatedPlans.length > 0) {
+        setActivePlanId(updatedPlans[0].id);
+        setActiveTimeSpan(updatedPlans[0].timeSpan);
+        setCurrentTimerIndex(0);
+        setWorkTimeLeft(Number(updatedPlans[0].timeSpan[0].workTime));
+        setRestTimeLeft(Number(updatedPlans[0].timeSpan[0].restTime));
+      } else {
+        setActivePlanId('');
+        setActiveTimeSpan([]);
+        setCurrentTimerIndex(0);
+        setWorkTimeLeft(0);
+        setRestTimeLeft(0);
+      }
+    }
+
+    setPlans(updatedPlans);
+  };
+
+  const updateActivePlan = (id: string) => {
+    const activePlan = plans.find((plan) => plan.id === id);
+    if (activePlan) {
+      setActivePlanId(activePlan.id);
+      setActiveTimeSpan(activePlan.timeSpan);
+      setWorkTimeLeft(Number(activePlan.timeSpan[currentTimerIndex]?.workTime) || 0);
+      setRestTimeLeft(Number(activePlan.timeSpan[currentTimerIndex]?.restTime) || 0);
+      setIsRunning(false);
+    }
+  };
+
+  useEffect(() => {
+    let timerId: any; 
+
+    if (!isBreak) {
+      if (isRunning) {
+        timerId = setInterval(() => {
+          setWorkTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
+        }, 1000);
       }
 
-      }, [isRunning, workTimeLeft, activePlan, restTimeLeft]);
-    
-      // const handleTimerEnd = () => {
-      //   if (isBreak) {
-      //     playAudio(restAudioRefs.current)
-      //     setIsBreak(false);
-      //     startNextTimer();
-      //   } else {
-      //     playAudio(workAudioRefs.current)
-      //     setRestTimeLeft(0)
-      //     setIsBreak(true);
-      //     startRestTimer();
-      //   }
-      // };
+      if (workTimeLeft === 0) {
+        clearInterval(timerId);
+        playRest(); // Play the rest sound
+        handleTimerEnd();
+      }
 
-      const handleTimerEnd = () => {
-        if (isBreak) {
-          // playAudio(restAudioRefs);
-          setIsBreak(false);
-          startNextTimer();
-          setIsRunning(true);
-        } else {
-          // playAudio(workAudioRefs);
-          if (currentTimerIndex + 1 < activeTimeSpan.length) {
-            setWorkTimeLeft(Number(activeTimeSpan[currentTimerIndex + 1].workTime));
-            setIsRunning(true);
-          } else {
-            console.log('Well done');
-            setIsRunning(false);
-          }
-          setRestTimeLeft(Number(activeTimeSpan[currentTimerIndex].restTime));
-          setIsBreak(true);
-        }
+      return () => {
+        clearInterval(timerId);
       };
-      
-
-      
-    
-      const startNextTimer = () => {
-        const nextTimerIndex = currentTimerIndex + 1;
-        const prevTimeIndex = currentTimerIndex - 1
-        if (nextTimerIndex < activeTimeSpan.length) {
-          setCurrentTimerIndex(nextTimerIndex);
-          setWorkTimeLeft(Number(activeTimeSpan[nextTimerIndex].workTime));
-          setIsRunning(true)
-        } else {
-          console.log('Well done');
-        }
-      };
-    
-      const startRestTimer = () => {
-        const restTime = Number(activeTimeSpan[currentTimerIndex].restTime);
-        setRestTimeLeft(restTime);
-      };
-    
-      const playAudio = (audioFile: any) => {
-        audioFile.current.play()
-      };
-    
-      const handleButtonClick = () => {
-        if (isRunning) {
-          setIsRunning(false);
-        } else {
-          setIsRunning(true);
-          setWorkTimeLeft(Number(activeTimeSpan[currentTimerIndex].workTime));
-          setRestTimeLeft(Number(activeTimeSpan[currentTimerIndex].restTime));
-        }
-    };
-
-
-    //  FUNCTIONS
-    const createPlan = ( name: string, planId: string, timeData: Plans[] ) => {
-        setPlans((prev: any) => {
-            let newPlan = {
-                id: planId,
-                name: name,
-                timeSpan: timeData
-            }
-           return prev = [...prev, newPlan]
-        })
-    }
-
-// FUNCTIONS
-//     const deletePlan = (id: string) => {
-//        let newArr = []
-//        for(let i=0;i<plans.length;i++){
-//         if(plans[i].id !== id){
-//             newArr.push(plans[i])
-//         } else {
-//             continue
-//         }
-//     } 
-//     if (activePlan.id === id) {
-//         //@ts-ignore
-//         setActivePlan(plans[0])
-//     }
-//     setPlans(newArr)
-// }
-
-const deletePlan = (id: string) => {
-  const updatedPlans = plans.filter((plan) => plan.id !== id);
-
-  if (activePlan.id === id) {
-    if (updatedPlans.length > 0) {
-      setActivePlan(updatedPlans[0]);
-      setActiveTimeSpan(updatedPlans[0].timeSpan);
-      setCurrentTimerIndex(0);
-      setWorkTimeLeft(Number(updatedPlans[0].timeSpan[0].workTime));
-      setRestTimeLeft(Number(updatedPlans[0].timeSpan[0].restTime));
     } else {
-      //@ts-ignore
-      setActivePlan(null);
-      setActiveTimeSpan([]);
-      setCurrentTimerIndex(0);
-      setWorkTimeLeft(0);
-      setRestTimeLeft(0);
+      if (isRunning) {
+        timerId = setInterval(() => {
+          setRestTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
+        }, 1000);
+      }
+
+      if (restTimeLeft === 0) {
+        clearInterval(timerId);
+        playWork(); // Play the rest sound
+        handleTimerEnd();
+      }
+
+      return () => {
+        clearInterval(timerId);
+      };
     }
-  }
+  }, [isRunning, workTimeLeft, activePlan, restTimeLeft, isBreak, handleTimerEnd, playRest]);
 
-  setPlans(updatedPlans);
+  return (
+    <TimerContext.Provider
+      value={{
+        createPlan,
+        deletePlan,
+        updateActivePlan,
+        currentTimerIndex,
+        isRunning,
+        restTimeLeft,
+        workTimeLeft,
+        handleButtonClick,
+        plans,
+        activePlan,
+      }}
+    >
+      {children}
+    </TimerContext.Provider>
+  );
 };
 
-
-
-const updateActivePlan = (id: string) => {
-  const activePlan = plans.find((plan) => plan.id === id);
-  if (activePlan) {
-    setActivePlan(activePlan);
-    setActiveTimeSpan(activePlan.timeSpan);
-    setWorkTimeLeft(Number(activePlan.timeSpan[currentTimerIndex].workTime));
-    setRestTimeLeft(Number(activePlan.timeSpan[currentTimerIndex].restTime));
-    // setActivePlanId(id);
-    setIsRunning(false)
-  }
-};
-
-     // @ts-ignore
-    return <TimerContext.Provider value={{ createPlan, currentTimerIndex, isRunning, restTimeLeft, workTimeLeft, handleButtonClick, plans, deletePlan, activePlan, updateActivePlan }}>{children}</TimerContext.Provider>
-} 
-export {TimeProvider, TimerContext}
+export { TimeProvider, TimerContext };

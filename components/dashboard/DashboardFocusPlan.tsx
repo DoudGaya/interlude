@@ -8,7 +8,7 @@ export const DashboardFocusPlan = ( {plans}: any) => {
 
     // @ts-ignore
     const { activePlan, updateActivePlan, restTimeLeft, workTimeLeft  } = useContext(TimerContext)
-    const { timeSpan } = activePlan
+    // const { timeSpan } = activePlan || null
 
 
     return (
@@ -16,7 +16,8 @@ export const DashboardFocusPlan = ( {plans}: any) => {
             <div className=" flex flex-row space-x-4 border dark:border-gray-600 p-3 border-primary/10 rounded-xl">
             <div className="grid grid-cols-3 gap-4 w-full">
                {
-                timeSpan.map((item: Plans) => <Timer timeSpan={item} key={item.id} /> )
+
+                activePlan?.timeSpan.map((item: Plans) => <Timer timeSpan={item} key={item.id} /> )
                }
             </div>
       </div>
