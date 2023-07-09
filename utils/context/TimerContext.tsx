@@ -216,7 +216,7 @@ const TimeProvider = ({ children }: { children: ReactNode }): JSX.Element => {
       if (isRunning) {
         timerId = setInterval(() => {
           setWorkTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
-        }, 1000);
+        }, 1000 * 60);
       }
 
       if (workTimeLeft === 0) {
@@ -232,7 +232,7 @@ const TimeProvider = ({ children }: { children: ReactNode }): JSX.Element => {
       if (isRunning) {
         timerId = setInterval(() => {
           setRestTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
-        }, 1000);
+        }, 1000 * 60);
       }
 
       if (restTimeLeft === 0) {

@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import Providers from './providers'
 import { AuthContextProvider } from '@/utils/context/AuthContext'
 import { Navigation } from './Navigation'
+import Head from 'next/head'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,6 +19,19 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
+        <Head>
+          <link rel="icon" href="/favicon.ico" />
+          <meta
+            name="description"
+            content="Create a productive workf plan with break interval"
+          />
+          <meta
+            property="og:description"
+            content="Create a productive workf plan with break interval."
+          />
+
+        </Head>
+
       <body className={inter.className+' dark:bg-gray-950 bg-gray-50'}>
             <Providers>
                 <AuthContextProvider>
