@@ -17,7 +17,7 @@ export const DashboardFocusPlan = ( {plans}: any) => {
             <div className="grid grid-cols-3 gap-4 w-full">
                {
 
-                activePlan?.timeSpan.map((item: Plans) => <Timer timeSpan={item} key={item.id} /> )
+                activePlan?.timeSpan.map((item: any) => <Timer timeSpan={item} key={item.id} /> )
                }
             </div>
       </div>
