@@ -4,9 +4,9 @@ if (!process.env.OPENAI_API_KEY) {
   throw new Error("Missing env var from OpenAI");
 }
 
-const config = {
-  runtime: "edge",
-};
+// const config = {
+//   runtime: "edge",
+// };
 
 
 const POST = async (req: Request): Promise<Response> => {
@@ -48,4 +48,4 @@ const POST = async (req: Request): Promise<Response> => {
   );
 };
 
-export {POST, config};
+export default POST;
