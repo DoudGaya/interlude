@@ -23,11 +23,16 @@ export default async function RootLayout({
           <link rel="icon" href="/favicon.ico" />
           <meta
             name="description"
-            content="Create a productive workf plan with break interval"
+            content="Create a productive work plan with break interval"
           />
           <meta
             property="og:description"
-            content="Create a productive workf plan with break interval."
+            content="Create a productive work plan with break interval."
+          />
+
+          <meta
+            property="keywords"
+            content="interlude, break, work, productivity, business"
           />
 
         </Head>
