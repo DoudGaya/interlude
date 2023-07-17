@@ -4,12 +4,12 @@ if (!process.env.OPENAI_API_KEY) {
   throw new Error("Missing env var from OpenAI");
 }
 
-// const config = {
-//   runtime: "edge",
-// };
+const config = {
+  runtime: "edge",
+};
 
 
-const POST = async (req: Request): Promise<Response> => {
+const GET = async (req: Request): Promise<Response> => {
   const { prompt } = (await req.json()) as {
     prompt?: string;
   };
@@ -19,10 +19,6 @@ const POST = async (req: Request): Promise<Response> => {
     return new Response("No prompt in the request", { status: 400 });
   }
 
-
-  // const configuration = new Configuration({
-  //   apiKey: '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',
-  // });
 
 
   const payload: OpenAIStreamPayload = {
@@ -48,4 +44,6 @@ const POST = async (req: Request): Promise<Response> => {
   );
 };
 
-export default POST;
+export default GET;
+
+
